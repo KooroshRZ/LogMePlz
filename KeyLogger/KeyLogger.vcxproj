@@ -138,9 +138,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Client.cpp" />
     <ClCompile Include="src\KeyLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Client.h" />
     <ClInclude Include="src\KeyLogger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

