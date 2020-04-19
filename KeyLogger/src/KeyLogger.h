@@ -1,8 +1,9 @@
 #pragma once
 
 #define _CRT_SECURE_NO_WARNINGS
-#define WIN32_LEAD_AND_MEAN
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define WIN32_LEAD_AND_MEAN
+
 
 #include <winsock2.h>
 #include <windows.h>
@@ -17,7 +18,7 @@
 #pragma comment (lib, "Advapi32.lib")
 
 #define DEFAULT_BUFFER_LENGTH 512
-#define PORT_NUMBER 20001
+#define PORT_NUMBER 10002
 
 int initSocket();
 int sendData(char buffer[]);

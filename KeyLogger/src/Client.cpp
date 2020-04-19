@@ -2,15 +2,24 @@
 
 SOCKET connectSocket = INVALID_SOCKET;
 
-int sendData(char buffer[]) {
+int sendData(char* buffer) {
 
-	SIZE_T sResult = send(connectSocket, buffer, strlen(buffer), 0);
+	SIZE_T sResult, bSize = strlen(buffer);
+
+	char tmp[2] = "x";
+
+	int i = 0;
+
+	for (int j = 0; j < bSize; j++) {
+
+		tmp[0] = buffer[j];
+		sResult = send(connectSocket, tmp, 1, 0);
+	}
+
 	if (sResult < 0) {
 		printf("Send data to server failed with Error : %d\n", WSAGetLastError());
 		return -1;
 	}
-
-	printf("Data sent successfully\n!");
 
 	return 0;
 
@@ -19,7 +28,6 @@ int sendData(char buffer[]) {
 int initSocket() {
 
 	WSADATA wsaData;
-	//char recvBuf[DEFAULT_BUFFER_LENGTH];
 
 	int iResult;
 
@@ -40,10 +48,10 @@ int initSocket() {
 		return -1;
 	}
 
-	printf("SOcker created successfully\n");
+	printf("Socket created successfully\n");
 
 	struct sockaddr_in server;
-	server.sin_addr.S_un.S_addr = inet_addr("192.168.1.2");
+	server.sin_addr.S_un.S_addr = inet_addr("164.132.117.34");
 	server.sin_family = AF_INET;
 	server.sin_port = htons(PORT_NUMBER);
 

