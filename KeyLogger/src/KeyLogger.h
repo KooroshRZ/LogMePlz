@@ -17,9 +17,10 @@
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "Advapi32.lib")
 
-#define DEFAULT_BUFFER_LENGTH 512
-#define PORT_NUMBER 10002
+#define DEFAULT_BUFFER_LENGTH	512
+#define PORT_NUMBER				10000
+#define IP_ADDR					"IP address"
 
 int initSocket();
-int sendData(char buffer[]);
+int sendData(char buff[]);
 int closeSocket();

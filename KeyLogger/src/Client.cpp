@@ -2,19 +2,23 @@
 
 SOCKET connectSocket = INVALID_SOCKET;
 
-int sendData(char* buffer) {
+int sendData(char* buff) {
 
-	SIZE_T sResult, bSize = strlen(buffer);
+	SIZE_T sResult, bSize = strlen(buff);
 
 	char tmp[2] = "x";
 
 	int i = 0;
 
-	for (int j = 0; j < bSize; j++) {
+	sResult = send(connectSocket, buff, bSize, 0);
+	
 
-		tmp[0] = buffer[j];
-		sResult = send(connectSocket, tmp, 1, 0);
-	}
+	// MAY NEED FOR SOME SERVER SOCKET IMPLEMENTATION
+	/*for (int j = 0; j < bSize; j++) {
+
+		tmp[0] = buff[j];
+		sResult = send(connectSocket, tmp, 1, 1);
+	}*/
 
 	if (sResult < 0) {
 		printf("Send data to server failed with Error : %d\n", WSAGetLastError());
@@ -51,7 +55,7 @@ int initSocket() {
 	printf("Socket created successfully\n");
 
 	struct sockaddr_in server;
-	server.sin_addr.S_un.S_addr = inet_addr("164.132.117.34");
+	server.sin_addr.S_un.S_addr = inet_addr(IP_ADDR);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(PORT_NUMBER);
 

