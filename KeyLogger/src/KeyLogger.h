@@ -19,8 +19,8 @@
 
 #define DEFAULT_BUFFER_LENGTH	512
 #define PORT_NUMBER				10000
-#define IP_ADDR					"IP address"
+#define IP_ADDR					"server IP address"
 
 int initSocket();
-int sendData(char buff[]);
+int sendData(char buffer[]);
 int closeSocket();

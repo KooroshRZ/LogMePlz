@@ -2,20 +2,15 @@
 
 SOCKET connectSocket = INVALID_SOCKET;
 
-int sendData(char* buff) {
+int sendData(char* buffer) {
 
-	SIZE_T sResult, bSize = strlen(buff);
-
+	int sResult, bSize = (int)strlen(buffer);
 	char tmp[2] = "x";
 
-	int i = 0;
-
-	sResult = send(connectSocket, buff, bSize, 0);
+	sResult = send(connectSocket, buffer, bSize, 0);
 	
-
 	// MAY NEED FOR SOME SERVER SOCKET IMPLEMENTATION
 	/*for (int j = 0; j < bSize; j++) {
-
 		tmp[0] = buff[j];
 		sResult = send(connectSocket, tmp, 1, 1);
 	}*/
@@ -36,6 +31,7 @@ int initSocket() {
 	int iResult;
 
 	// Initialize Winsock
+	// returns zero on success
 	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != 0) {
 		printf("WSAStartup failed with Error : %d\n", WSAGetLastError());
@@ -60,9 +56,15 @@ int initSocket() {
 	server.sin_port = htons(PORT_NUMBER);
 
 	// connect to remote server
-	int cResult = connect(connectSocket, (struct sockaddr*)&server, sizeof(server));
+	// returns zero on success
+	int cResult = -1;
+	while (cResult == -1){
+		cResult  = connect(connectSocket, (struct sockaddr*)&server, sizeof(server));
+		Sleep(3000);
+	}
+	
 
-	if (cResult < 0) {
+	if (cResult != 0) {
 		printf("Connect to server failed with Error : %d\n", WSAGetLastError());
 		return -1;
 	}

